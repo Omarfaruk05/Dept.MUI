@@ -27,6 +27,9 @@ const LoginPage = () => {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
+        maxWidth: "1280px",
+        margin: "0 auto",
+        padding: "0 10px",
       }}
     >
       <img style={{ width: "50%" }} src={loginPic} alt="" />
