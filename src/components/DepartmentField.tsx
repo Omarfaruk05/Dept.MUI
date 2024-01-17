@@ -33,14 +33,13 @@ const Departments: IDepartment[] = [
 
 const DepartmentField = () => {
   const [clickedDept, setClickedDept] = useState<string[]>([]);
-  const [colaps, setColaps] = useState<boolean>(false);
   const [departments, setDepartments] = useState<IDepartment[]>([]);
 
   useEffect(() => {
     setDepartments(Departments);
   }, []);
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, checked } = e.target;
 
     console.log(checked);
@@ -65,7 +64,10 @@ const DepartmentField = () => {
     }
   };
 
-  const handleSubDepartment = (e, dept: IDepartment) => {
+  const handleSubDepartment = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    dept: IDepartment
+  ) => {
     const { name, checked } = e.target;
 
     const subDepartments = dept?.sub_departments;
@@ -132,7 +134,7 @@ const DepartmentField = () => {
                 name={department.department}
                 id={department.department}
                 checked={department.isChecked}
-                onClick={handleChange}
+                onChange={handleChange}
               />
               <label htmlFor={department.department}>
                 {department?.department}
@@ -146,7 +148,7 @@ const DepartmentField = () => {
                     name={sub_department}
                     id={sub_department}
                     checked={department?.isChecked}
-                    onClick={(e) => handleSubDepartment(e, department)}
+                    onChange={(e) => handleSubDepartment(e, department)}
                   />
                   <label htmlFor={sub_department}>{sub_department}</label>
                 </div>
