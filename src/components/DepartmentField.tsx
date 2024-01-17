@@ -5,6 +5,7 @@ type SubDepartment = string[];
 interface IDepartment {
   department: string;
   sub_departments: SubDepartment;
+  isChecked?: boolean;
 }
 
 const Departments: IDepartment[] = [
@@ -30,12 +31,37 @@ const Departments: IDepartment[] = [
   },
 ];
 
-const DepertmentField = () => {
-  const [departmets, setDepartments] = useState<IDepartment[]>([]);
+const DepartmentField = () => {
+  const [departments, setDepartments] = useState<IDepartment[]>([]);
 
   useEffect(() => {
     setDepartments(Departments);
   }, []);
+
+  const handleChange = (e) => {
+    const { name, checked } = e.target;
+    console.log(checked);
+    const updatedDepartments = departments.map((department) =>
+      department.department === name
+        ? { ...department, isChecked: checked }
+        : department
+    );
+
+    setDepartments(updatedDepartments);
+  };
+
+  const handleSubDepartment = (e, dept: IDepartment) => {
+    const { name, checked } = e.target;
+    const subDepartments = dept?.sub_departments;
+
+    const subDept = [];
+
+    if (name && checked === true) {
+      subDept.push(name);
+    }
+    console.log(subDept);
+  };
+
   return (
     <div>
       <h2
@@ -48,29 +74,40 @@ const DepertmentField = () => {
       >
         Department Field
       </h2>
-      {/* departmets  */}
+      {/* departments  */}
       <div style={{ margin: "20px" }}>
-        <form>
-          {departmets.map((department: IDepartment, index) => (
-            <div style={{ marginBottom: "15px" }} key={index}>
-              <div style={{ fontWeight: "bold", fontSize: "20px" }}>
-                <input type="checkbox" name="" id="" />
-                <label>{department?.department}</label>
-              </div>
-              {department?.sub_departments?.map(
-                (sub_department: string, index) => (
-                  <div key={index} style={{ marginLeft: "10px" }}>
-                    <input type="checkbox" name="" id="" />
-                    <label htmlFor="">{sub_department}</label>
-                  </div>
-                )
-              )}
+        {departments?.map((department: IDepartment, departmentIndex) => (
+          <div style={{ marginBottom: "15px" }} key={departmentIndex}>
+            <div style={{ fontWeight: "bold", fontSize: "20px" }}>
+              <input
+                type="checkbox"
+                name={department.department}
+                id={department.department}
+                onClick={handleChange}
+              />
+              <label htmlFor={department.department}>
+                {department?.department}
+              </label>
             </div>
-          ))}
-        </form>
+            {department?.sub_departments?.map(
+              (sub_department: string, subDepartmentIndex) => (
+                <div key={subDepartmentIndex} style={{ marginLeft: "10px" }}>
+                  <input
+                    type="checkbox"
+                    name={sub_department}
+                    id={sub_department}
+                    checked={department?.isChecked}
+                    onClick={(e) => handleSubDepartment(e, department)}
+                  />
+                  <label htmlFor={sub_department}>{sub_department}</label>
+                </div>
+              )
+            )}
+          </div>
+        ))}
       </div>
     </div>
   );
 };
 
-export default DepertmentField;
+export default DepartmentField;
