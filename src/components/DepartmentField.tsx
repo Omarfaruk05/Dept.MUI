@@ -32,6 +32,8 @@ const Departments: IDepartment[] = [
 ];
 
 const DepartmentField = () => {
+  const [clickedDept, setClickedDept] = useState<string[]>([]);
+  const [colaps, setColaps] = useState<boolean>(false);
   const [departments, setDepartments] = useState<IDepartment[]>([]);
 
   useEffect(() => {
@@ -40,26 +42,72 @@ const DepartmentField = () => {
 
   const handleChange = (e) => {
     const { name, checked } = e.target;
-    console.log(checked);
-    const updatedDepartments = departments.map((department) =>
-      department.department === name
-        ? { ...department, isChecked: checked }
-        : department
-    );
 
-    setDepartments(updatedDepartments);
+    console.log(checked);
+
+    if (!checked) {
+      const updatedDepartments = departments.map((department) =>
+        department.department === name
+          ? { ...department, isChecked: undefined }
+          : department
+      );
+
+      setDepartments(updatedDepartments);
+    }
+    if (checked) {
+      const updatedDepartments = departments.map((department) =>
+        department.department === name
+          ? { ...department, isChecked: checked }
+          : department
+      );
+
+      setDepartments(updatedDepartments);
+    }
   };
 
   const handleSubDepartment = (e, dept: IDepartment) => {
     const { name, checked } = e.target;
+
     const subDepartments = dept?.sub_departments;
 
-    const subDept = [];
+    let data: string[] = [];
 
-    if (name && checked === true) {
-      subDept.push(name);
+    if (checked) {
+      data = [...clickedDept, name];
+      setClickedDept(data);
     }
-    console.log(subDept);
+    if (!checked) {
+      data = [...clickedDept, name];
+      setClickedDept(data);
+      const newData = data?.filter((element) => element !== name);
+      console.log(newData);
+      data = newData;
+      setClickedDept(data);
+    }
+    console.log(data);
+    if (clickedDept.length) {
+      const allSubDepartmentClicked = subDepartments.every((element) =>
+        data.includes(element)
+      );
+
+      if (allSubDepartmentClicked) {
+        const updatedDepartments = departments.map((department) =>
+          department.department === dept.department
+            ? { ...department, isChecked: checked }
+            : department
+        );
+
+        setDepartments(updatedDepartments);
+      } else {
+        const updatedDepartments = departments.map((department) =>
+          department.department === dept.department
+            ? { ...department, isChecked: undefined }
+            : department
+        );
+
+        setDepartments(updatedDepartments);
+      }
+    }
   };
 
   return (
@@ -83,6 +131,7 @@ const DepartmentField = () => {
                 type="checkbox"
                 name={department.department}
                 id={department.department}
+                checked={department.isChecked}
                 onClick={handleChange}
               />
               <label htmlFor={department.department}>
