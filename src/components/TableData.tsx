@@ -33,7 +33,7 @@ const TableData = () => {
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
-              <TableRow style={{ fontWeight: "700" }}>
+              <TableRow style={{ backgroundColor: "#acb1b6" }}>
                 <TableCell>Name</TableCell>
                 <TableCell>User Name</TableCell>
                 <TableCell>Email</TableCell>
