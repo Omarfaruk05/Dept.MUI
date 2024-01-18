@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import DepartmentsData from "./DepartmentsData";
 
 type SubDepartment = string[];
 
@@ -87,7 +88,6 @@ const DepartmentField = () => {
       data = newData;
       setClickedDept(data);
     }
-    console.log(data);
     if (clickedDept.length) {
       const allSubDepartmentClicked = subDepartments.every((element) =>
         data.includes(element)
@@ -128,34 +128,12 @@ const DepartmentField = () => {
       {/* departments  */}
       <div style={{ margin: "20px" }}>
         {departments?.map((department: IDepartment, departmentIndex) => (
-          <div style={{ marginBottom: "15px" }} key={departmentIndex}>
-            <div style={{ fontWeight: "bold", fontSize: "20px" }}>
-              <input
-                type="checkbox"
-                name={department.department}
-                id={department.department}
-                checked={department.isChecked}
-                onChange={handleChange}
-              />
-              <label htmlFor={department.department}>
-                {department?.department}
-              </label>
-            </div>
-            {department?.sub_departments?.map(
-              (sub_department: string, subDepartmentIndex) => (
-                <div key={subDepartmentIndex} style={{ marginLeft: "10px" }}>
-                  <input
-                    type="checkbox"
-                    name={sub_department}
-                    id={sub_department}
-                    checked={department?.subDept}
-                    onChange={(e) => handleSubDepartment(e, department)}
-                  />
-                  <label htmlFor={sub_department}>{sub_department}</label>
-                </div>
-              )
-            )}
-          </div>
+          <DepartmentsData
+            key={departmentIndex}
+            department={department}
+            handleChange={handleChange}
+            handleSubDepartment={handleSubDepartment}
+          />
         ))}
       </div>
     </div>

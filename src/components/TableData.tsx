@@ -17,6 +17,10 @@ const TableData = () => {
       .then((data) => setData(data));
   }, []);
 
+  if (!data.length) {
+    return <div>Loading</div>;
+  }
+
   return (
     <div>
       <div>

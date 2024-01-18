@@ -3,8 +3,9 @@
 import { FormGroup, TextField, Button } from "@mui/material";
 import loginPic from "../assets/20824344_6343825.jpg";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
-interface IUserInfo {
+export interface IUserInfo {
   name: string;
   phoneNumber: string;
   email: string;
@@ -12,6 +13,7 @@ interface IUserInfo {
 
 const LoginPage = () => {
   const navigate = useNavigate();
+  const [formIsValid, setFormIsValid] = useState(false);
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     const userInfo: IUserInfo = {
@@ -22,6 +24,16 @@ const LoginPage = () => {
 
     await localStorage.setItem("userInfo", JSON.stringify(userInfo));
     navigate("/home");
+  };
+
+  const handleInputChange = () => {
+    const form = document.forms.namedItem(
+      "loginForm"
+    ) as HTMLFormElement | null;
+
+    if (form) {
+      setFormIsValid(form.checkValidity());
+    }
   };
   return (
     <div
@@ -43,6 +55,8 @@ const LoginPage = () => {
           textAlign: "center",
         }}
         onSubmit={handleSubmit}
+        onChange={handleInputChange}
+        name="loginForm"
       >
         <FormGroup>
           <TextField
@@ -73,6 +87,7 @@ const LoginPage = () => {
           type="submit"
           variant="contained"
           color="info"
+          disabled={!formIsValid}
         >
           Submit
         </Button>
