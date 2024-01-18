@@ -4,12 +4,7 @@ import { FormGroup, TextField, Button } from "@mui/material";
 import loginPic from "../assets/20824344_6343825.jpg";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-
-export interface IUserInfo {
-  name: string;
-  phoneNumber: string;
-  email: string;
-}
+import { IUserInfo } from "../inferfaces/interface";
 
 const LoginPage = () => {
   const navigate = useNavigate();
