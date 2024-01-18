@@ -11,6 +11,23 @@ const router = createBrowserRouter([
     path: "home",
     element: <HomePage />,
   },
+  {
+    path: "*",
+    element: (
+      <div>
+        <h1
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "94vh",
+          }}
+        >
+          Page not found
+        </h1>
+      </div>
+    ),
+  },
 ]);
 
 export default router;

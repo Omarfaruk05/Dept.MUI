@@ -2,6 +2,7 @@
 
 import { FormGroup, TextField, Button } from "@mui/material";
 import loginPic from "../assets/20824344_6343825.jpg";
+import { useNavigate } from "react-router-dom";
 
 interface IUserInfo {
   name: string;
@@ -10,6 +11,7 @@ interface IUserInfo {
 }
 
 const LoginPage = () => {
+  const navigate = useNavigate();
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     const userInfo: IUserInfo = {
@@ -19,6 +21,7 @@ const LoginPage = () => {
     };
 
     await localStorage.setItem("userInfo", JSON.stringify(userInfo));
+    navigate("/home");
   };
   return (
     <div
@@ -47,18 +50,22 @@ const LoginPage = () => {
             label="Name"
             variant="outlined"
             margin="normal"
+            required
           />
           <TextField
             name="phoneNumber"
             label="Phone Number"
             variant="outlined"
             margin="normal"
+            required
           />
           <TextField
             name="email"
             label="Email"
             variant="outlined"
             margin="normal"
+            required
+            type="email"
           />
         </FormGroup>
         <Button

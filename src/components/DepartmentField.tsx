@@ -6,6 +6,7 @@ interface IDepartment {
   department: string;
   sub_departments: SubDepartment;
   isChecked?: boolean;
+  subDept?: boolean;
 }
 
 const Departments: IDepartment[] = [
@@ -47,7 +48,7 @@ const DepartmentField = () => {
     if (!checked) {
       const updatedDepartments = departments.map((department) =>
         department.department === name
-          ? { ...department, isChecked: undefined }
+          ? { ...department, isChecked: undefined, subDept: undefined }
           : department
       );
 
@@ -56,7 +57,7 @@ const DepartmentField = () => {
     if (checked) {
       const updatedDepartments = departments.map((department) =>
         department.department === name
-          ? { ...department, isChecked: checked }
+          ? { ...department, isChecked: checked, subDept: checked }
           : department
       );
 
@@ -147,7 +148,7 @@ const DepartmentField = () => {
                     type="checkbox"
                     name={sub_department}
                     id={sub_department}
-                    checked={department?.isChecked}
+                    checked={department?.subDept}
                     onChange={(e) => handleSubDepartment(e, department)}
                   />
                   <label htmlFor={sub_department}>{sub_department}</label>
