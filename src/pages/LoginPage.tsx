@@ -47,7 +47,12 @@ const LoginPage = () => {
         padding: "0 10px",
       }}
     >
-      <img style={{ width: "50%" }} src={loginPic} alt="" />
+      <img
+        className="loginPic"
+        style={{ width: "50%" }}
+        src={loginPic}
+        alt=""
+      />
 
       <form
         style={{

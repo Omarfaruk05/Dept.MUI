@@ -7,6 +7,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import { CircularProgress } from "@mui/material";
 
 const TableData = () => {
   const [data, setData] = useState([]);
@@ -18,7 +19,18 @@ const TableData = () => {
   }, []);
 
   if (!data.length) {
-    return <div>Loading</div>;
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "80vh",
+        }}
+      >
+        <CircularProgress />
+      </div>
+    );
   }
 
   return (

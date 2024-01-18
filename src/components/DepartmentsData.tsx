@@ -18,7 +18,12 @@ const DepartmentsData = ({
           checked={department.isChecked}
           onChange={handleChange}
         />
-        <label htmlFor={department.department}>{department?.department}</label>
+        <label htmlFor={department.department}>
+          {department?.department}{" "}
+          <span style={{ fontSize: "14px", color: "gray" }}>
+            ({department?.sub_departments?.length})
+          </span>
+        </label>
       </div>
       {department?.sub_departments?.map(
         (sub_department: string, index: number) => (
